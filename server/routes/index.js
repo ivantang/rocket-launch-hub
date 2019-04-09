@@ -9,8 +9,12 @@ var router = ((app) => {
 
   app.get('/launch', (req, res) => {
 
+    // make sure query is a number
+    let num = parseInt(req.query.next, 10);
+    if((!num) || (num < 1) || (typeof num) !== "number") num = 1;
+
     const myPromise = new Promise((resolve, reject) => {
-      const launchData = fetchLaunch(req, res, resolve, reject);
+      const launchData = fetchLaunch(req, res, num, resolve, reject);
     })
 
     myPromise.then((launchData) => {
