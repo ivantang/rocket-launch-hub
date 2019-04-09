@@ -1,0 +1,10 @@
+body {
+  background-color: #fff0ffff;
+}
+
+.launch {
+  width: 100%;
+  margin: 0.5rem;
+  border-radius: 4px;
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.19) !important;
+}
