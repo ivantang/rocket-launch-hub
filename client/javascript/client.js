@@ -14,7 +14,6 @@ function main() {
   });
 
   myPromise.then((launchData) => {
-    console.log(launchData);
     populateArticleDom(launchData.launches);
     addFilterButtonsListeners(launchData.launches);
   });
@@ -26,13 +25,19 @@ function main() {
 * Add click listeners to filter buttons
 *
 */
-function addFilterButtonsListeners(launches){
+function addFilterButtonsListeners(){
   let buttons = document.getElementsByClassName("filter-buttons")[0].childNodes;
 
   buttons.forEach((button) => {
     if(button.nodeName == "BUTTON") {
-      button.addEventListener("click", () => {
-        populateArticleDom(filterBy(launches, button.innerHTML));
+      button.addEventListener("click", (event) => {
+        const myPromise = new Promise((resolve, reject) => {
+          let launchData = getLaunchData(resolve, reject);
+        });
+
+        myPromise.then((launchData) => {
+          populateArticleDom(launchData.launches);
+        });
       });
     }
   });
@@ -86,17 +91,18 @@ function populateArticleDom(launches)  {
       //create headers
       let rocketName = document.createElement('h2');
       rocketName.innerHTML = launch.rocket.name;
-      rocketName.className = 'rocket'
+      rocketName.className = 'rocket';
       newSection.appendChild(rocketName);
 
       let agencyName = document.createElement('h2');
       agencyName.innerHTML = launch.lsp.name;
-      agencyName.className = 'agency'
+      agencyName.className = 'agency';
       newSection.appendChild(agencyName);
 
       //create p elements
       let location = document.createElement('p');
-      let locationUrl = document.createElement('a')
+      location.className = 'location';
+      let locationUrl = document.createElement('a');
       locationUrl.href = launch.location.pads[0].mapURL;
       locationUrl.target = '_blank';
       locationUrl.innerHTML = launch.location.name;
@@ -104,11 +110,13 @@ function populateArticleDom(launches)  {
       newSection.appendChild(location);
 
       let date = document.createElement('p')
+      date.className = 'date';
       date.innerHTML = launch.net;
       newSection.appendChild(date);
 
       //image
       let rocketImage = document.createElement('img');
+      rocketImage.className = 'rocketImage';
 
       //get smaller size image
       let rocketImageUrl = launch.rocket.imageURL.split('.');
@@ -149,6 +157,8 @@ function populateArticleDom(launches)  {
 */
 function filterBy(launches, filterType) {
   switch(filterType) {
+    case 'All':
+      return launches;
     case 'Confirmed':
       return launches.filter((launch) => {
         if (launch.probability > 0) return launch;
@@ -164,9 +174,24 @@ function filterBy(launches, filterType) {
         if (launch.location.countryCode === 'Russia') return launch;
       })
       break;
+    case 'China':
+      return launches.filter((launch) => {
+        if (launch.location.countryCode === 'China') return launch;
+      })
+      break;
+    case 'India':
+      return launches.filter((launch) => {
+        if (launch.location.countryCode === 'India') return launch;
+      })
+      break;
     case 'SpaceX':
       return launches.filter((launch) => {
         if (launch.lsp.name === 'SpaceX') return launch;
+      })
+      break;
+    case 'NASA':
+      return launches.filter((launch) => {
+        if (launch.lsp.name === 'NASA') return launch;
       })
       break;
   }
