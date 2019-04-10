@@ -1,4 +1,6 @@
 
+// This file is contains the logic for the client application
+
 const expressServerURL = 'http://localhost:8000/launch?next=200';
 
 main();
@@ -63,7 +65,6 @@ function getLaunchData(resolve, reject) {
 *
 */
 function populateArticleDom(launches)  {
-  console.log(launches);
 
   //get parent
   let newArticle = document.getElementsByClassName("launches")[0];
@@ -75,7 +76,7 @@ function populateArticleDom(launches)  {
 
   //add launch elements
   launches.forEach((launch) => {
-      //console.log(launch);
+      console.log(launch);
 
       //create section
       let newSection = document.createElement('section');
@@ -85,13 +86,25 @@ function populateArticleDom(launches)  {
 
       //create headers
       let rocketName = document.createElement('h2');
-      rocketName.innerHTML = launch.rocket.name;
       rocketName.className = 'rocket';
+      let rocketNameLink = document.createElement('a');
+      if (launch.rocket.agencies !== null) {
+        if (launch.rocket.agencies.length !== 0)
+          rocketNameLink.href = launch.rocket.wikiURL;
+      }
+      rocketNameLink.innerHTML = launch.rocket.name;
+      rocketName.appendChild(rocketNameLink);
       newSection.appendChild(rocketName);
 
       let agencyName = document.createElement('h2');
-      agencyName.innerHTML = launch.lsp.name;
       agencyName.className = 'agency';
+      let agencyNameLink = document.createElement('a');
+      if (launch.rocket.agencies !== null) {
+        if (launch.rocket.agencies.length !== 0)
+          agencyNameLink.href = launch.rocket.agencies[0].wikiURL;
+      }
+      agencyNameLink.innerHTML = launch.lsp.name;
+      agencyName.appendChild(agencyNameLink);
       newSection.appendChild(agencyName);
 
       //create p elements
@@ -104,7 +117,7 @@ function populateArticleDom(launches)  {
       location.appendChild(locationUrl);
       newSection.appendChild(location);
 
-      let date = document.createElement('p')
+      let date = document.createElement('p');
       date.className = 'date';
       date.innerHTML = launch.net;
       newSection.appendChild(date);
