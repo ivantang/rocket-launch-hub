@@ -1,3 +1,5 @@
+// This file is the main server file
+
 const express = require('express');
 const router = require('./routes/index.js');
 const controller = require('./controllers/index.js');

@@ -1,3 +1,5 @@
+// // This file controls logic for server
+
 const fetch = require('node-fetch');
 const launchLibraryUrl = 'https://launchlibrary.net';
 

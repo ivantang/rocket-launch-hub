@@ -1,4 +1,5 @@
-//routers
+// This file declares the routes for the server
+
 const fetchLaunch = require('../controllers/index.js');
 
 var router = ((app) => {

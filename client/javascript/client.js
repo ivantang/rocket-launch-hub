@@ -76,8 +76,6 @@ function populateArticleDom(launches)  {
 
   //add launch elements
   launches.forEach((launch) => {
-      console.log(launch);
-
       //create section
       let newSection = document.createElement('section');
       newSection.id = launch.id;
