@@ -1,5 +1,5 @@
 
-const expressServerURL = 'http://localhost:8000/launch?next=100';
+const expressServerURL = 'http://localhost:8000/launch?next=200';
 
 main();
 
@@ -25,19 +25,13 @@ function main() {
 * Add click listeners to filter buttons
 *
 */
-function addFilterButtonsListeners(){
+function addFilterButtonsListeners(launches){
   let buttons = document.getElementsByClassName("filter-buttons")[0].childNodes;
 
   buttons.forEach((button) => {
     if(button.nodeName == "BUTTON") {
       button.addEventListener("click", (event) => {
-        const myPromise = new Promise((resolve, reject) => {
-          let launchData = getLaunchData(resolve, reject);
-        });
-
-        myPromise.then((launchData) => {
-          populateArticleDom(launchData.launches);
-        });
+          populateArticleDom(filterBy(launches, button.innerHTML));
       });
     }
   });
@@ -69,14 +63,15 @@ function getLaunchData(resolve, reject) {
 *
 */
 function populateArticleDom(launches)  {
+  console.log(launches);
+
   //get parent
   let newArticle = document.getElementsByClassName("launches")[0];
 
   //first delete all child nodes of article
-  newArticle.childNodes.forEach((section) => {
-    section.remove();
-  });
-
+  while(newArticle.firstChild) {
+    newArticle.removeChild(newArticle.firstChild);
+  }
 
   //add launch elements
   launches.forEach((launch) => {
@@ -171,17 +166,17 @@ function filterBy(launches, filterType) {
       break;
     case 'Russia':
       return launches.filter((launch) => {
-        if (launch.location.countryCode === 'Russia') return launch;
+        if (launch.location.countryCode === 'RUS') return launch;
       })
       break;
     case 'China':
       return launches.filter((launch) => {
-        if (launch.location.countryCode === 'China') return launch;
+        if (launch.location.countryCode === 'CHN') return launch;
       })
       break;
     case 'India':
       return launches.filter((launch) => {
-        if (launch.location.countryCode === 'India') return launch;
+        if (launch.location.countryCode === 'IND') return launch;
       })
       break;
     case 'SpaceX':
