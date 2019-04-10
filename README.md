@@ -9,4 +9,4 @@
 npm install:server
 npm install:client
 ```
-4. Open [./rocket-launch-hub/client](./rocket-launch-hub/client) and drag `index.html` into your browser.
+4. Open [client](./client) folder in your desktop explorer and drag `index.html` into your browser.
