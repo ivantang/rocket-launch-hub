@@ -3,13 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "postinstall": "run-p install:api install:web",
-    "install:server": "cd server && npm install",
-    "install:client": "cd client && npm install",
-    "start": "run-p start:server",
-    "start:server": "cd server && node server.js",
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ivantang/rocket-launch-hub.git"
